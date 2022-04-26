@@ -1,6 +1,4 @@
-import invariant from 'invariant'
-import React from 'react'
-import createReactClass from 'create-react-class'
+import { Component, invariant } from 'react';
 import { func, object } from 'prop-types'
 
 import createTransitionManager from './createTransitionManager'
@@ -30,10 +28,10 @@ const prefixUnsafeLifecycleMethods = typeof React.forwardRef !== 'undefined'
  * a router that renders a <RouterContext> with all the props
  * it needs each time the URL changes.
  */
-const Router = createReactClass({
-  displayName: 'Router',
+class Router extends Component {
+  static displayName = 'Router'
 
-  propTypes,
+  static propTypes
 
   getDefaultProps() {
     return {
@@ -41,7 +39,7 @@ const Router = createReactClass({
         return <RouterContext {...props} />
       }
     }
-  },
+  }
 
   getInitialState() {
     return {
@@ -50,7 +48,7 @@ const Router = createReactClass({
       params: null,
       components: null
     }
-  },
+  }
 
   handleError(error) {
     if (this.props.onError) {
@@ -59,7 +57,7 @@ const Router = createReactClass({
       // Throw errors by default so we don't silently swallow them!
       throw error // This error probably occurred in getChildRoutes or getComponents.
     }
-  },
+  }
 
   createRouterObject(state) {
     const { matchContext } = this.props
@@ -69,7 +67,7 @@ const Router = createReactClass({
 
     const { history } = this.props
     return createRouterObject(history, this.transitionManager, state)
-  },
+  }
 
   createTransitionManager() {
     const { matchContext } = this.props
@@ -91,10 +89,10 @@ const Router = createReactClass({
       history,
       createRoutes(routes || children)
     )
-  },
+  }
 
   // this method will be updated to UNSAFE_componentWillMount below for React versions >= 16.3
-  componentWillMount() {
+  componentDidMount() {
     this.transitionManager = this.createTransitionManager()
     this.router = this.createRouterObject(this.state)
 
@@ -108,7 +106,7 @@ const Router = createReactClass({
         this.setState(state, this.props.onUpdate)
       }
     })
-  },
+  }
 
   // this method will be updated to UNSAFE_componentWillReceiveProps below for React versions >= 16.3
   /* istanbul ignore next: sanity check */
@@ -123,12 +121,12 @@ const Router = createReactClass({
         (this.props.routes || this.props.children),
       'You cannot change <Router routes>; it will be ignored'
     )
-  },
+  }
 
   componentWillUnmount() {
     if (this._unlisten)
       this._unlisten()
-  },
+  }
 
   render() {
     const { location, routes, params, components } = this.state
@@ -152,7 +150,7 @@ const Router = createReactClass({
     })
   }
 
-})
+}
 
 if (prefixUnsafeLifecycleMethods) {
   Router.prototype.UNSAFE_componentWillReceiveProps = Router.prototype.componentWillReceiveProps
@@ -161,4 +159,4 @@ if (prefixUnsafeLifecycleMethods) {
   delete Router.prototype.componentWillMount
 }
 
-export default Router
+export default Router;

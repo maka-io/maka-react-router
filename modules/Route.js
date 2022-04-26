@@ -1,8 +1,7 @@
-import createReactClass from 'create-react-class'
-import { string, func } from 'prop-types'
-import invariant from 'invariant'
-import { createRouteFromReactElement } from './RouteUtils'
-import { component, components } from './InternalPropTypes'
+import { Component, invariant } from 'react';
+import { string, func } from 'prop-types';
+import { createRouteFromReactElement } from './RouteUtils';
+import { component, components } from './InternalPropTypes';
 
 /**
  * A <Route> is used to declare which components are rendered to the
@@ -15,20 +14,20 @@ import { component, components } from './InternalPropTypes'
  * rendered into the DOM, nested in the same order as in the tree.
  */
 /* eslint-disable react/require-render-return */
-const Route = createReactClass({
-  displayName: 'Route',
+class Route extends Component {
+  static displayName = 'Route'
 
-  statics: {
+  static statics = {
     createRouteFromReactElement
-  },
+  }
 
-  propTypes: {
+  static propTypes = {
     path: string,
     component,
     components,
     getComponent: func,
     getComponents: func
-  },
+  }
 
   /* istanbul ignore next: sanity check */
   render() {
@@ -38,6 +37,6 @@ const Route = createReactClass({
     )
   }
 
-})
+};
 
 export default Route

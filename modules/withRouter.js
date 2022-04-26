@@ -1,9 +1,7 @@
-import invariant from 'invariant'
-import React from 'react'
-import createReactClass from 'create-react-class'
-import hoistStatics from 'hoist-non-react-statics'
-import { ContextSubscriber } from './ContextUtils'
-import { routerShape } from './PropTypes'
+import { Component, invariant } from 'react';
+import hoistStatics from 'hoist-non-react-statics';
+import { ContextSubscriber } from './ContextUtils';
+import { routerShape } from './PropTypes';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component'
@@ -12,13 +10,13 @@ function getDisplayName(WrappedComponent) {
 export default function withRouter(WrappedComponent, options) {
   const withRef = options && options.withRef
 
-  const WithRouter = createReactClass({
-    displayName: 'WithRouter',
-    
-    mixins: [ ContextSubscriber('router') ],
+  class WithRouter extends Component {
+    static displayName = 'WithRouter'
 
-    contextTypes: { router: routerShape },
-    propTypes: { router: routerShape },
+    static mixins = [ ContextSubscriber('router') ]
+
+    static contextTypes = { router: routerShape }
+    static propTypes = { router: routerShape }
 
     getWrappedInstance() {
       invariant(
@@ -28,7 +26,7 @@ export default function withRouter(WrappedComponent, options) {
       )
 
       return this.wrappedInstance
-    },
+    }
 
     render() {
       const router = this.props.router || this.context.router
@@ -45,7 +43,7 @@ export default function withRouter(WrappedComponent, options) {
 
       return <WrappedComponent {...props} />
     }
-  })
+  }
 
   WithRouter.displayName = `withRouter(${getDisplayName(WrappedComponent)})`
   WithRouter.WrappedComponent = WrappedComponent

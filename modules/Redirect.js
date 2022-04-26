@@ -1,9 +1,8 @@
-import createReactClass from 'create-react-class'
-import { string, object } from 'prop-types'
-import invariant from 'invariant'
-import { createRouteFromReactElement } from './RouteUtils'
-import { formatPattern } from './PatternUtils'
-import { falsy } from './InternalPropTypes'
+import { Component, invariant } from 'react';
+import { string, object } from 'prop-types';
+import { createRouteFromReactElement } from './RouteUtils';
+import { formatPattern } from './PatternUtils';
+import { falsy } from './InternalPropTypes';
 
 /**
  * A <Redirect> is used to declare another URL path a client should
@@ -13,11 +12,10 @@ import { falsy } from './InternalPropTypes'
  * and are traversed in the same manner.
  */
 /* eslint-disable react/require-render-return */
-const Redirect = createReactClass({
-  displayName: 'Redirect',
+class Redirect extends Component {
+  static displayName = 'Redirect'
 
-  statics: {
-
+  static statics = {
     createRouteFromReactElement(element) {
       const route = createRouteFromReactElement(element)
 
@@ -65,9 +63,9 @@ const Redirect = createReactClass({
       return '/' + parentPattern
     }
 
-  },
+  }
 
-  propTypes: {
+  static propTypes = {
     path: string,
     from: string, // Alias for path
     to: string.isRequired,
@@ -75,7 +73,7 @@ const Redirect = createReactClass({
     state: object,
     onEnter: falsy,
     children: falsy
-  },
+  }
 
   /* istanbul ignore next: sanity check */
   render() {
@@ -84,7 +82,6 @@ const Redirect = createReactClass({
       '<Redirect> elements are for router configuration only and should not be rendered'
     )
   }
+}
 
-})
-
-export default Redirect
+export default Redirect;

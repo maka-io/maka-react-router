@@ -1,6 +1,6 @@
 import { REPLACE } from 'history/lib/Actions'
-import invariant from 'invariant'
 
+import { invariant } from 'react';
 import createMemoryHistory from './createMemoryHistory'
 import createTransitionManager from './createTransitionManager'
 import { createRoutes } from './RouteUtils'

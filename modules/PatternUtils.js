@@ -1,4 +1,4 @@
-import invariant from 'invariant'
+import { invariant } from 'react';
 
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')

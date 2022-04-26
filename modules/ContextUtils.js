@@ -38,7 +38,7 @@ export function ContextProvider(name) {
     },
 
     // this method will be updated to UNSAFE_componentWillMount below for React versions >= 16.3
-    componentWillMount() {
+    componentDidMount() {
       this[listenersKey] = []
       this[eventIndexKey] = 0
     },
